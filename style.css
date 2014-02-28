@@ -243,7 +243,7 @@ p.wp-caption-text{
 	text-transform: capitalize;
 }
 .text-container h1 a,.text-container p a,.text-container h6 a{
-	color: #383838;
+	color: #000;
 	text-decoration: none;
 }
 .text-container h1{
@@ -1618,3 +1618,7 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
     color: #585858;
     line-height: normal;
 }
+b, strong {
+font-weight: bold;
+color: #383838;
+} 
