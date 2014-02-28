@@ -472,7 +472,7 @@ function get_excerpt_max_charlength($charlength) {
 		$exwords = explode( ' ', $subex );
 		$excut = - ( mb_strlen( $exwords[ count( $exwords ) - 1 ] ) );
 		if ( $excut < 0 ) {
-			return mb_substr( $subex, 0, $excut ) . '...';
+			return rtrim(mb_substr( $subex, 0, $excut )).'...';
 		} else {
 			return $subex;
 		}
