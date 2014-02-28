@@ -324,6 +324,7 @@ ul.link li a:hover{
 .related .text-container h6{
 	margin: 5px 0px 5px 0px;
 	font-size: 16px;
+	font-weight: 900;
 	font-family: 'Lato', sans-serif;
 }
 .travel_reports .text-container p,.chronicle .text-container p,.new_job .text-container p,.related .text-container p{

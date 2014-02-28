@@ -1,0 +1,494 @@
+$GLOBALS['footer_menu']=array();
+$GLOBALS['footer_menu_link']=array();
+$GLOBALS['footer_menu_title']=array();
+function TravelReport_navigation(){
+			        $sMenu = "Huvudmeny";
+			        $arrMenuItems = wp_get_nav_menu_items($sMenu);
+					$arrMenuItemsMod = array();
+					foreach($arrMenuItems as $key=>$value){
+						$id = $value->ID;
+						$parent = $value->menu_item_parent;
+						$id = $value->object_id;
+						$parent = $value->post_parent;
+						if(!isset($arrMenuItemsMod[$parent])) $arrMenuItemsMod[$parent] = array('item'=>array(),'children'=>array());
+						if(!isset($arrMenuItemsMod[$id])) $arrMenuItemsMod[$id] = array('item'=>array(),'children'=>array());
+						$arrMenuItemsMod[$id]['item'] = &$arrMenuItems[$key];
+						$arrMenuItemsMod[$parent]['children'][$id] = &$arrMenuItemsMod[$id];
+					}
+					$arrMenuItemsModID = array();
+					foreach($arrMenuItems as $key=>$value){
+						$id = $value->ID;
+						$parent = $value->menu_item_parent;
+						if(!isset($arrMenuItemsModID[$parent])) $arrMenuItemsModID[$parent] = array('item'=>array(),'children'=>array());
+						if(!isset($arrMenuItemsModID[$id])) $arrMenuItemsModID[$id] = array('item'=>array(),'children'=>array());
+						$arrMenuItemsModID[$id]['item'] = &$arrMenuItems[$key];
+						$arrMenuItemsModID[$parent]['children'][$id] = &$arrMenuItemsModID[$id];
+					}
+			        $GLOBALS['wp-db-show'] = false;
+					echo "<ul class=\"main_menu\">";
+					$sPostType ="";
+			        $nParentID = 0;
+			        $sMenuOutput = "";
+			        $sMobleOutput ="";
+			        if (is_single()) {
+			          	global $wp_query;
+				        $nPostId = $wp_query->post->ID;
+			          	$sPostType = get_post_type($nPostId);
+			          	$arrCurrentCategory = get_the_category($nPostId);
+			          	$nCurrentCategory = $arrCurrentCategory[0]->cat_ID;
+			          	if ($nCurrentCategory == 843) {
+			            	$nCurrentCategory = "";
+			          	}
+			          	
+			        } else if(is_page()){
+			          	global $wp_query;
+			          	$nPostId = $wp_query->post->ID;
+					  	
+			          	$sPostType = get_post_type($nPostId);
+					  	$nCurrentCategory = $nPostId;
+					  	
+					  	$p = isset($arrMenuItemsMod[$nCurrentCategory]) ? $arrMenuItemsMod[$nCurrentCategory]['item']->object : '';
+					  	if($p!='page'){
+							$nCurrentCategory = '';
+					  	}
+					  	
+					} else {
+						
+			          	$nCurrentCategory = get_query_var('cat');
+			          	if (str_replace ("/new/", "", $_SERVER['REQUEST_URI']) == "alla-annonser/") {
+			            	$nCurrentCategory = 30;
+			          	}	
+					  	
+			        }
+					
+			        if ($nCurrentCategory == '' || $nCurrentCategory == '14') {
+			          	$nCurrentCategory = 77;
+			        }
+					
+			        if ($nCurrentCategory == 3) {
+			        
+			        }
+			        if ($nCurrentCategory == 18) {
+			          	$nCurrentCategory = 19;
+			        }
+					
+			        if ($sPostType == "jobads") {
+			          	$nCurrentCategory = 30;
+			        }
+			        if ($nCurrentCategory == 30) {
+			          	$nCurrentCategory = 31;
+			        }
+			        if ($nCurrentCategory == 45) {
+			          	$nCurrentCategory = 46;
+			        }
+					$lvls = 1;
+					
+			        if (empty($nCurrentCategory)) {
+			          	$nCurrentMenuItem = GetFirstMenuItem($sMenu);
+			        } else {
+						$nCurrentMenuItem = GetMenuItemForCategory($sMenu, $nCurrentCategory);
+					}					
+					
+			        $nCurrentMenuParent = GetMenuParent($sMenu, $nCurrentCategory);
+					
+			        $nSubMenuParentID = $nCurrentMenuItem;
+			        $nSubMenuParentID2 = null;
+					
+					$items_list = array();
+					
+						if(isset($arrMenuItemsMod[$nCurrentCategory])){
+							$_iID = $arrMenuItemsMod[$nCurrentCategory]['item'];
+							$_iID = $_iID ? $_iID->ID : 0;
+							array_push($items_list,$arrMenuItemsModID[$_iID]);
+							for($_item = $arrMenuItemsModID[$_iID]; $_item['item'] && ($iid=$_item['item']->menu_item_parent) && isset($arrMenuItemsModID[$iid]) && ($iitem=$arrMenuItemsModID[$iid]['item']) && $_item=$arrMenuItemsModID[$iid]; ){
+								
+								array_unshift($items_list,$_item);
+							}
+							
+							if($_item['item'] && $_item['item']->object_id!=$nCurrentCategory){
+								
+							}
+						}						
+					
+			        $nCurrentPost = get_the_ID();
+					
+			        if ($nCurrentMenuParent > 0) {
+			          	$nCurrentMenuItem = $nCurrentMenuParent;
+			        }
+					$topItem = count($items_list) ? $items_list[0]['item']->ID : $nCurrentMenuItem;
+			        $nNoOfMenuItems = count($arrMenuItems);
+			        $link_cont=0;
+			        foreach($arrMenuItems as $key=>$value){
+			          	if ($value->menu_item_parent == $nParentID) {
+			            	$sMenuItemID    = $value->ID;
+			            	$sMenuItemTitle = $value->title;
+			            	$sMenuItemUrl   = $value->url;
+							if($sMenuItemID!=77){
+								/*for($i=0;$i<count($arrMenuItems);$i++){
+									if($arrMenuItems[$i]->menu_item_parent==$sMenuItemID){
+										$sMenuItemUrl   = $arrMenuItems[$i]->url;
+										break;
+									}
+								}*/
+							}
+				            $sCurrentMenuItem = "";
+				            if ($sMenuItemID == $nCurrentMenuItem || $topItem==$sMenuItemID) {
+			              		$sCurrentMenuItem = "current-menu-item";
+			            	}
+			            	$sMenuOutput .= "<li id=\"menu-item-{$sMenuItemID}\" class=\"menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-{$sMenuItemID} {$sCurrentMenuItem}\"><a href=\"{$sMenuItemUrl}\">{$sMenuItemTitle}</a></li>\n";
+			          		$sMobleOutput .="<a href=\"{$sMenuItemUrl}\">{$sMenuItemTitle}</a>";
+			          		$GLOBALS['footer_menu_link'][$link_cont]=$sMenuItemUrl;
+			          		$GLOBALS['footer_menu_title'][$link_cont]=$sMenuItemTitle;
+			          		$link_cont++;
+			          	}
+			        }
+			        echo $sMenuOutput;
+			        echo "</ul>";
+			        echo "<nav class=\"cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left\" id=\"cbp-spmenu-s1\"><h3>Menu</h3>{$sMobleOutput}</nav>";
+			        echo "<ul id=\"sub_menu-{$topItem}\" class=\"sub_menu\">";
+			        
+					echo submenu($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
+					echo "</ul>";
+					
+					moresub($arrMenuItems,$items_list,$topItem);
+					$lvls = 1;
+			       	$hover_menu="";
+			       	$cat_list=0;
+			        foreach($arrMenuItems as $key=>$value){   
+
+			          	if ($value->menu_item_parent == $nParentID) {
+			          		//echo $nParentID."\n";
+			          		if($cat_list==0){
+			          			$nCurrentCategory=77;
+			          		}
+			          		if($cat_list==1){
+			          			$nCurrentCategory=19;
+			          		}
+			          		if($cat_list==2){
+			          			$nCurrentCategory=23;
+			          		}
+			          		if($cat_list==3){
+			          			$nCurrentCategory=31;
+			          		}
+			          		if($cat_list==4){
+			          			$nCurrentCategory=1028;
+			          		}
+			          		if($cat_list==5){
+			          			$nCurrentCategory=47;
+			          		}
+
+
+
+			          		//$nCurrentCategory=$cat_list[$i];
+			          		
+
+			          		if (empty($nCurrentCategory)) {
+					          	$nCurrentMenuItem = GetFirstMenuItem($sMenu);
+					        } else {
+								$nCurrentMenuItem = GetMenuItemForCategory($sMenu, $nCurrentCategory);
+							}					
+							
+					        $nCurrentMenuParent = GetMenuParent($sMenu, $nCurrentCategory);
+							
+					        $nSubMenuParentID = $nCurrentMenuItem;
+					        $nSubMenuParentID2 = null;
+							
+							$items_list = array();
+							
+								if(isset($arrMenuItemsMod[$nCurrentCategory])){
+									$_iID = $arrMenuItemsMod[$nCurrentCategory]['item'];
+									$_iID = $_iID ? $_iID->ID : 0;
+									array_push($items_list,$arrMenuItemsModID[$_iID]);
+									for($_item = $arrMenuItemsModID[$_iID]; $_item['item'] && ($iid=$_item['item']->menu_item_parent) && isset($arrMenuItemsModID[$iid]) && ($iitem=$arrMenuItemsModID[$iid]['item']) && $_item=$arrMenuItemsModID[$iid]; ){
+										
+										array_unshift($items_list,$_item);
+									}
+									
+									if($_item['item'] && $_item['item']->object_id!=$nCurrentCategory){
+										
+									}
+								}						
+							
+					        $nCurrentPost = get_the_ID();
+							
+					        if ($nCurrentMenuParent > 0) {
+					          	$nCurrentMenuItem = $nCurrentMenuParent;
+					        }
+							$topItem = count($items_list) ? $items_list[0]['item']->ID : $nCurrentMenuItem;
+					        $nNoOfMenuItems = count($arrMenuItems);
+			            	$sMenuItemID    = $value->ID;
+			            	$sMenuItemTitle = $value->title;
+			            	$sMenuItemUrl   = $value->url;
+							if($sMenuItemID!=77){
+								/*for($i=0;$i<count($arrMenuItems);$i++){
+									if($arrMenuItems[$i]->menu_item_parent==$sMenuItemID){
+										$sMenuItemUrl   = $arrMenuItems[$i]->url;
+										break;
+									}
+								}*/
+							}
+				            $sCurrentMenuItem = "";
+				            if ($sMenuItemID == $nCurrentMenuItem || $topItem==$sMenuItemID) {
+			              		$sCurrentMenuItem = "current-menu-item";
+			            	}
+			            	$sSubMenuOutput ="";
+			            	$sSubMenuOutput = submenu($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
+			            	
+			            	//if($nCurrentCategory!=77){
+			            	$sSubMenuName=submenu_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
+			            	$act_cat=explode(',', $sSubMenuName);
+			            	
+			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 );
+							print_r($nCurrentCategory);
+							$the_query = new WP_Query( $args );
+							$dta="";
+							$dta_more="";
+							// The Loop
+							$first_post=0;
+							
+							while ( $the_query->have_posts() ) {
+								$the_query->the_post();
+								global $post;  // Add this line and you're golden
+								$cat_array=TravelReport_categorylistfirstArray($post->ID);
+								$cat_intersect=array_intersect ( $act_cat,$cat_array );
+								$cat_name=array_shift($cat_intersect);
+								$cat_link=get_category_link(get_cat_ID( $cat_name ));
+								if($first_post==0){
+									if(get_the_post_thumbnail($post->ID, 'thumbnail-container')){
+										$dta.= '<div class="box">
+												<div class="image_container">
+													<a href="'.get_permalink( $post->ID ).'">
+														<img src="'.wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) ).'">
+													</a>
+												</div>
+												<div class="box_info">
+													<div class="cat"><a href="'.$cat_link.'" title="'.$cat_name.'">'.$cat_name.'</a></div>
+													<div class="date">'.ucfirst (get_the_date()).' - '.get_the_time('G:i').'</div>
+													<h4><a href="'.get_permalink( $post->ID ).'">'.get_the_title().'</a></h4>
+													<p>'.get_the_excerpt().'</p>
+												</div>
+											</div>';
+									}else{
+										$sFirstImage = catch_first_post_image();
+										if($sFirstImage!=''){
+											$dta.= '<div class="box">
+												<div class="image_container">
+													<a href="'.get_permalink( $post->ID ).'">
+														<img src="'.$sFirstImage.'">
+													</a>
+												</div>
+												<div class="box_info">
+													<div class="cat"><a href="'.$cat_link.'" title="'.$cat_name.'">'.$cat_name.'</a></div>
+													<div class="date">'.ucfirst (get_the_date()).' - '.get_the_time('G:i').'</div>
+													<h4><a href="'.get_permalink( $post->ID ).'">'.get_the_title().'</a></h4>
+													<p>'.get_the_excerpt().'</p>
+												</div>
+											</div>';
+										}else{
+											$dta.= '<div class="box">
+												<div class="image_container">
+													<a href="'.get_permalink( $post->ID ).'">
+														<img src="'.IMAGES.'/fallback_voyage.png">
+													</a>
+												</div>
+												<div class="box_info">
+													<div class="cat"><a href="'.$cat_link.'" title="'.$cat_name.'">'.$cat_name.'</a></div>
+													<div class="date">'.ucfirst (get_the_date()).' - '.get_the_time('G:i').'</div>
+													<h4><a href="'.get_permalink( $post->ID ).'">'.get_the_title().'</a></h4>
+													<p>'.get_the_excerpt().'</p>
+												</div>
+											</div>';
+										}
+									}
+								}else{
+									$dta_more.='<div class="box_info">
+											<div class="cat"><a href="'.$cat_link.'" title="'.$cat_name.'">'.$cat_name.'</a></div>
+											<div class="date">'.ucfirst (get_the_date()).' - '.get_the_time('G:i').'</div>
+											<h4 ><a href="'.get_permalink( $post->ID ).'">'.get_the_title().'</a></h4>
+										</div>';
+								}
+								$first_post++;
+							}
+
+							/* Restore original Post Data 
+							 * NB: Because we are using new WP_Query we aren't stomping on the 
+							 * original $wp_query and it does not need to be reset.
+							*/
+							wp_reset_postdata();
+						
+							// Reset Query
+							wp_reset_query();
+			            	$hover_menu .= "<ul class=\"sub_menu_hover\" id=\"sub_menu_hover-{$sMenuItemID}\"><div class=\"cat_area\"><h3>I den här sektionen</h3><ul class=\"cat_name\">{$sSubMenuOutput}</ul></div><div class=\"latest_area\"><h3>Senaste från {$sMenuItemTitle}</h3>{$dta}</div><div class=\"more\"><h3>Mer från {$sMenuItemTitle}</h3><div class=\"box\">{$dta_more}</div></div></ul>\n";
+			          	    $GLOBALS['footer_menu'][$cat_list]=$sSubMenuOutput;
+			          		$cat_list++;
+
+			          	}
+			        }
+			        echo $hover_menu;
+			   		//print_r($GLOBALS['footer_menu']);
+}
+function freplace($item) {
+	if(isset($GLOBALS['nCurrentMenuItem'])){ 
+		return $GLOBALS['nCurrentMenuItem'] == $item->ID;
+	}
+}
+function freplace2($item){ 
+	if(isset($GLOBALS['objParentCat']))
+	{
+		return $GLOBALS['objParentCat']->menu_item_parent == $item->ID;
+	} 
+}
+function freplace3($item) { 
+	if(isset($GLOBALS['sMenuItemID'])){
+		return $GLOBALS['sMenuItemID'] == $item->ID;
+	}
+}
+function freplace4($item) { 
+	if(isset($GLOBALS['IndiobjParentCat']->menu_item_parent)){
+		return $GLOBALS['IndiobjParentCat']->menu_item_parent == $item->ID;
+	}
+}
+function submenu($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem){
+					
+			        /*
+			         * Print out main menu, level 2
+			        */
+
+			        $sSubMenuOutput = "";
+					$GLOBALS['nCurrentMenuItem']=$nCurrentMenuItem;
+					$objParentCat = array_shift(
+						array_filter(
+							$arrMenuItems, 
+							"freplace"
+						)
+					);
+					
+					$GLOBALS['objParentCat']=$objParentCat;
+					
+					$objParentOfParentCat = array_shift(array_filter($arrMenuItems, "freplace2"));
+					
+					if(count($items_list)>0) $objParentOfParentCat = $items_list[0]['item'];
+					$subItem = count($items_list)>0 ? $items_list[0]['item']->ID : '';//$nCurrentMenuItem;
+					
+					foreach($arrMenuItems as $key=>$value){
+			        	if(isset($objParentOfParentCat)){
+				          	if ($value->menu_item_parent == $nCurrentMenuItem || $objParentOfParentCat->ID==$value->menu_item_parent) {
+											
+									$sMenuItemID    = $value->ID;
+									$sMenuItemTitle = $value->title;
+									$sMenuItemUrl   = $value->url;
+									$sCurrentMenuItem = "";
+									if ($sMenuItemID == $nSubMenuParentID || $subItem==$sMenuItemID) {
+									  $sCurrentMenuItem = "current-menu-item";
+									}
+									$GLOBALS['sMenuItemID']=$sMenuItemID;
+									$IndiobjParentCat = array_shift(array_filter($arrMenuItems, "freplace3"));
+									$GLOBALS['IndiobjParentCat']=$IndiobjParentCat;
+									$IndiobjParentOfParentCat = array_shift(array_filter($arrMenuItems, "freplace4"));
+									if($IndiobjParentOfParentCat->menu_item_parent==0){
+										$sSubMenuOutput .= "<li id=\"menu-item-{$sMenuItemID}\" class=\"menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{$sMenuItemID} {$sCurrentMenuItem}\"><a href=\"{$sMenuItemUrl}\">{$sMenuItemTitle}</a></li>\n";
+									}
+							
+				          	}
+			          	}
+			        }
+			        return $sSubMenuOutput;
+			     
+}
+function submenu_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem){
+					
+			        /*
+			         * Print out main menu, level 2
+			        */
+
+			        $sSubMenuOutput = "";
+					$GLOBALS['nCurrentMenuItem']=$nCurrentMenuItem;
+					
+					$objParentCat = array_shift(
+						array_filter(
+							$arrMenuItems, 
+							"freplace"
+						)
+					);
+					
+					$GLOBALS['objParentCat']=$objParentCat;
+					
+					$objParentOfParentCat = array_shift(array_filter($arrMenuItems, "freplace2"));
+					
+					if(count($items_list)>0) $objParentOfParentCat = $items_list[0]['item'];
+					$subItem = count($items_list)>0 ? $items_list[0]['item']->ID : '';//$nCurrentMenuItem;
+					
+					foreach($arrMenuItems as $key=>$value){
+			        
+			          	if ($value->menu_item_parent == $nCurrentMenuItem || $objParentOfParentCat->ID==$value->menu_item_parent) {
+										
+								$sMenuItemID    = $value->ID;
+								$sMenuItemTitle = $value->title;
+								$sMenuItemUrl   = $value->url;
+								$sCurrentMenuItem = "";
+								if ($sMenuItemID == $nSubMenuParentID || $subItem==$sMenuItemID) {
+								  $sCurrentMenuItem = "current-menu-item";
+								}
+								$GLOBALS['sMenuItemID']=$sMenuItemID;
+								
+									$IndiobjParentCat = array_shift(array_filter($arrMenuItems, "freplace3"));
+								
+								$GLOBALS['IndiobjParentCat']=$IndiobjParentCat;
+								$IndiobjParentOfParentCat = array_shift(array_filter($arrMenuItems, "freplace4"));
+								if($IndiobjParentOfParentCat->menu_item_parent==0){
+									$sSubMenuOutput .= $sMenuItemTitle.',';
+								}
+						
+			          	}
+			        }
+			        return $sSubMenuOutput;
+			     
+}
+function moresub($arrMenuItems,$items_list,$topItem){
+	$objParentCat = array_shift(
+						array_filter(
+							$arrMenuItems, 
+							"freplace"
+						)
+					);
+					
+					$GLOBALS['objParentCat']=$objParentCat;
+					if(count($items_list)>1 && ($citem = $items_list[1]) && count($citem['children'])) {
+						$nCurrentMenuItem = $citem['item']->ID;
+
+			        echo "<ul id=\"sub_menu_2-{$topItem}\" class=\"brutalMenu\">";
+			        /*
+			         * Print out main menu, level 2
+			         */
+					foreach($citem['children'] as $k=>$v){
+						$item = $v['item'];
+						print '<li id="menu-item-'.$item->ID.'" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-'.$item->ID.' '.(count($items_list)>2&&$items_list[2]['item']==$item?'current-menu-item':'').'"><a href="'.$item->url.'">'.$item->title.'</a></li>'."\n";
+					}
+					echo "</ul>";
+
+					}
+
+					if(isset($nSubMenuParentID) && $nSubMenuParentID != $nCurrentMenuItem){
+					
+
+						
+						if($objParentCat->menu_item_parent != 0){
+							$nSubMenuParentID= $objParentCat->ID;
+						}
+
+						echo "<ul id=\"sub_menu_3-{$topItem}\" class=\"brutalMenu\">";
+
+						foreach($arrMenuItems as $key=>$value){
+							if($value->menu_item_parent == $nSubMenuParentID){
+								
+								if($value->ID == $nCurrentMenuItem ){
+									$sCurrentMenuItem = "current-menu-item";
+								}
+								echo "<li id=\"menu-item-{$value->ID}\" class=\"menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{$value->ID} {$sCurrentMenuItem}\"><a href=\"{$value->url}\">{$value->title}</a></li>";
+							}
+						}
+
+					echo "</ul>";
+
+					}
+}
