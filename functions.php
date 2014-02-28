@@ -781,10 +781,11 @@ function TravelReport_navigation(){
 			            	
 			            	//if($nCurrentCategory!=77){
 			            	$sSubMenuName=submenu_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
+			            	//$addsuMenu=moresub_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
 			            	$act_cat=explode(',', $sSubMenuName);
-			            	
+			   
 			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 );
-							print_r($nCurrentCategory);
+			            	print_r($sSubMenuName."\n");
 							$the_query = new WP_Query( $args );
 							$dta="";
 							$dta_more="";
@@ -797,6 +798,9 @@ function TravelReport_navigation(){
 								$cat_array=TravelReport_categorylistfirstArray($post->ID);
 								$cat_intersect=array_intersect ( $act_cat,$cat_array );
 								$cat_name=array_shift($cat_intersect);
+								if($cat_name==''){
+									$cat_name=$cat_array[0];
+								}
 								$cat_link=get_category_link(get_cat_ID( $cat_name ));
 								if($first_post==0){
 									if(get_the_post_thumbnail($post->ID, 'thumbnail-container')){
@@ -1037,7 +1041,50 @@ function moresub($arrMenuItems,$items_list,$topItem){
 
 					}
 }
+function moresub_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem){
+	$objParentCat = array_shift(
+						array_filter(
+							$arrMenuItems, 
+							"freplace"
+						)
+					);
+					
+					$GLOBALS['objParentCat']=$objParentCat;
+					if(count($items_list)>1 && ($citem = $items_list[1]) && count($citem['children'])) {
+						$nCurrentMenuItem = $citem['item']->ID;
 
+			   
+			        /*
+			         * Print out main menu, level 2
+			         */
+					foreach($citem['children'] as $k=>$v){
+						$item = $v['item'];
+					
+					}
+
+
+					}
+
+					if(isset($nSubMenuParentID) && $nSubMenuParentID != $nCurrentMenuItem){
+					
+
+						
+						if($objParentCat->menu_item_parent != 0){
+							$nSubMenuParentID= $objParentCat->ID;
+						}
+						foreach($arrMenuItems as $key=>$value){
+							if($value->menu_item_parent == $nSubMenuParentID){
+								
+								if($value->ID == $nCurrentMenuItem ){
+									$sCurrentMenuItem = "current-menu-item";
+								}
+								$sSubMenuOutput .=$value->title.',';
+							}
+						}
+
+					}
+		return $sSubMenuOutput;
+}
 /**
  * Registering a post type called "jobbannonser".
  */
