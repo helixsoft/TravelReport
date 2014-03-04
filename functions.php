@@ -703,6 +703,7 @@ function TravelReport_navigation(){
 
 			          	if ($value->menu_item_parent == $nParentID) {
 			          		//echo $nParentID."\n";
+			          		$maincatId=$value->ID;
 			          		if($cat_list==0){
 			          			$nCurrentCategory=77;
 			          		}
@@ -764,6 +765,7 @@ function TravelReport_navigation(){
 			            	$sMenuItemID    = $value->ID;
 			            	$sMenuItemTitle = $value->title;
 			            	$sMenuItemUrl   = $value->url;
+			            	
 							if($sMenuItemID!=77){
 								/*for($i=0;$i<count($arrMenuItems);$i++){
 									if($arrMenuItems[$i]->menu_item_parent==$sMenuItemID){
@@ -783,9 +785,19 @@ function TravelReport_navigation(){
 			            	$sSubMenuName=submenu_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
 			            	//$addsuMenu=moresub_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
 			            	$act_cat=explode(',', $sSubMenuName);
-			   
+			            	$new='';
+			            	foreach ($act_cat as $small_cat) {
+			            		$new_sub=search($arrMenuItems,'title',$small_cat,$maincatId );
+			            		if(!empty($new_sub)){
+			            			$new=$new.implode(',',$new_sub);
+			            		}
+			            	}
+			            	$newsSubMenuName=$sSubMenuName.$new;
+			            	$act_cat=explode(',', $newsSubMenuName);
+			   				//
+			            	//print_r($arrMenuItems);
 			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 );
-			            	print_r($sSubMenuName."\n");
+
 							$the_query = new WP_Query( $args );
 							$dta="";
 							$dta_more="";
@@ -798,9 +810,9 @@ function TravelReport_navigation(){
 								$cat_array=TravelReport_categorylistfirstArray($post->ID);
 								$cat_intersect=array_intersect ( $act_cat,$cat_array );
 								$cat_name=array_shift($cat_intersect);
-								if($cat_name==''){
+								/*if($cat_name==''){
 									$cat_name=$cat_array[0];
-								}
+								}*/
 								$cat_link=get_category_link(get_cat_ID( $cat_name ));
 								if($first_post==0){
 									if(get_the_post_thumbnail($post->ID, 'thumbnail-container')){
@@ -875,6 +887,30 @@ function TravelReport_navigation(){
 			        }
 			        echo $hover_menu;
 			   		//print_r($GLOBALS['footer_menu']);
+}
+function search($array, $key, $value,$x)
+{
+    $results = array();
+    foreach ($array as $subarray) {
+		if($subarray->$key == $value && $subarray->menu_item_parent == $x)
+		{
+			return search_id($array,$subarray->ID);//search_id($array,$subarray->ID);
+		}        
+    }
+    
+}
+function search_id($array, $key)
+{
+    $results = array();
+    //print_r($key);
+    foreach ($array as $subarray) {
+    	
+		if($subarray->menu_item_parent == $key)
+		{
+			array_push($results,$subarray->title);
+		}        
+    }
+    return $results;
 }
 function freplace($item) {
 	if(isset($GLOBALS['nCurrentMenuItem'])){ 
