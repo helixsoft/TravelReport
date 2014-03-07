@@ -120,7 +120,7 @@ if (isset($_POST['selWeatherCity'])) {
 				<div class="weather">
 			        <div class="weather-city">
 			          <form method="post" style="margin-bottom: 15px;">
-			            <select name="selWeatherCity" onchange="submit();">
+			            <select name="selWeatherCity" onchange="submit();"> 
 			              	<?php
 			              	$sWeatherCity ="";
 			                if (isset($_COOKIE['WeatherCity'])) {
@@ -156,7 +156,21 @@ if (isset($_POST['selWeatherCity'])) {
 		<div class="row">
 			<div class="large-12 columns">
 				<nav class="main-nav">	
+				<?php 
+   $mtime = microtime(); 
+   $mtime = explode(" ",$mtime); 
+   $mtime = $mtime[1] + $mtime[0]; 
+   $starttime = $mtime; 
+   ?> 
 				<?php TravelReport_navigation(); ?>
+				<?php 
+   $mtime = microtime(); 
+   $mtime = explode(" ",$mtime); 
+   $mtime = $mtime[1] + $mtime[0]; 
+   $endtime = $mtime; 
+   $totaltime = ($endtime - $starttime); 
+   echo "This page was created in ".$totaltime." seconds"; 
+?>
 				</nav>		
 			</div>
 		</div>

@@ -550,6 +550,7 @@ function TravelReport_navigation(){
 			        $sMenu = "Huvudmeny";
 			        $arrMenuItems = wp_get_nav_menu_items($sMenu);
 					$arrMenuItemsMod = array();
+					$arrMenuItemsModID = array();
 					foreach($arrMenuItems as $key=>$value){
 						$id = $value->ID;
 						$parent = $value->menu_item_parent;
@@ -559,16 +560,12 @@ function TravelReport_navigation(){
 						if(!isset($arrMenuItemsMod[$id])) $arrMenuItemsMod[$id] = array('item'=>array(),'children'=>array());
 						$arrMenuItemsMod[$id]['item'] = &$arrMenuItems[$key];
 						$arrMenuItemsMod[$parent]['children'][$id] = &$arrMenuItemsMod[$id];
-					}
-					$arrMenuItemsModID = array();
-					foreach($arrMenuItems as $key=>$value){
-						$id = $value->ID;
-						$parent = $value->menu_item_parent;
 						if(!isset($arrMenuItemsModID[$parent])) $arrMenuItemsModID[$parent] = array('item'=>array(),'children'=>array());
 						if(!isset($arrMenuItemsModID[$id])) $arrMenuItemsModID[$id] = array('item'=>array(),'children'=>array());
 						$arrMenuItemsModID[$id]['item'] = &$arrMenuItems[$key];
 						$arrMenuItemsModID[$parent]['children'][$id] = &$arrMenuItemsModID[$id];
 					}
+					
 			        $GLOBALS['wp-db-show'] = false;
 					echo "<ul class=\"main_menu\">";
 					$sPostType ="";
@@ -641,19 +638,15 @@ function TravelReport_navigation(){
 					
 					$items_list = array();
 					
-						if(isset($arrMenuItemsMod[$nCurrentCategory])){
-							$_iID = $arrMenuItemsMod[$nCurrentCategory]['item'];
-							$_iID = $_iID ? $_iID->ID : 0;
-							array_push($items_list,$arrMenuItemsModID[$_iID]);
-							for($_item = $arrMenuItemsModID[$_iID]; $_item['item'] && ($iid=$_item['item']->menu_item_parent) && isset($arrMenuItemsModID[$iid]) && ($iitem=$arrMenuItemsModID[$iid]['item']) && $_item=$arrMenuItemsModID[$iid]; ){
-								
-								array_unshift($items_list,$_item);
-							}
+					if(isset($arrMenuItemsMod[$nCurrentCategory])){
+						$_iID = $arrMenuItemsMod[$nCurrentCategory]['item'];
+						$_iID = $_iID ? $_iID->ID : 0;
+						array_push($items_list,$arrMenuItemsModID[$_iID]);
+						for($_item = $arrMenuItemsModID[$_iID]; $_item['item'] && ($iid=$_item['item']->menu_item_parent) && isset($arrMenuItemsModID[$iid]) && ($iitem=$arrMenuItemsModID[$iid]['item']) && $_item=$arrMenuItemsModID[$iid]; ){
 							
-							if($_item['item'] && $_item['item']->object_id!=$nCurrentCategory){
-								
-							}
-						}						
+							array_unshift($items_list,$_item);
+						}
+					}						
 					
 			        $nCurrentPost = get_the_ID();
 					
@@ -668,14 +661,6 @@ function TravelReport_navigation(){
 			            	$sMenuItemID    = $value->ID;
 			            	$sMenuItemTitle = $value->title;
 			            	$sMenuItemUrl   = $value->url;
-							if($sMenuItemID!=77){
-								/*for($i=0;$i<count($arrMenuItems);$i++){
-									if($arrMenuItems[$i]->menu_item_parent==$sMenuItemID){
-										$sMenuItemUrl   = $arrMenuItems[$i]->url;
-										break;
-									}
-								}*/
-							}
 				            $sCurrentMenuItem = "";
 				            if ($sMenuItemID == $nCurrentMenuItem || $topItem==$sMenuItemID) {
 			              		$sCurrentMenuItem = "current-menu-item";
@@ -703,6 +688,7 @@ function TravelReport_navigation(){
 
 			          	if ($value->menu_item_parent == $nParentID) {
 			          		//echo $nParentID."\n";
+			          		$maincatId=$value->ID;
 			          		if($cat_list==0){
 			          			$nCurrentCategory=77;
 			          		}
@@ -721,12 +707,6 @@ function TravelReport_navigation(){
 			          		if($cat_list==5){
 			          			$nCurrentCategory=47;
 			          		}
-
-
-
-			          		//$nCurrentCategory=$cat_list[$i];
-			          		
-
 			          		if (empty($nCurrentCategory)) {
 					          	$nCurrentMenuItem = GetFirstMenuItem($sMenu);
 					        } else {
@@ -740,19 +720,16 @@ function TravelReport_navigation(){
 							
 							$items_list = array();
 							
-								if(isset($arrMenuItemsMod[$nCurrentCategory])){
-									$_iID = $arrMenuItemsMod[$nCurrentCategory]['item'];
-									$_iID = $_iID ? $_iID->ID : 0;
-									array_push($items_list,$arrMenuItemsModID[$_iID]);
-									for($_item = $arrMenuItemsModID[$_iID]; $_item['item'] && ($iid=$_item['item']->menu_item_parent) && isset($arrMenuItemsModID[$iid]) && ($iitem=$arrMenuItemsModID[$iid]['item']) && $_item=$arrMenuItemsModID[$iid]; ){
-										
-										array_unshift($items_list,$_item);
-									}
+							if(isset($arrMenuItemsMod[$nCurrentCategory])){
+								$_iID = $arrMenuItemsMod[$nCurrentCategory]['item'];
+								$_iID = $_iID ? $_iID->ID : 0;
+								array_push($items_list,$arrMenuItemsModID[$_iID]);
+								for($_item = $arrMenuItemsModID[$_iID]; $_item['item'] && ($iid=$_item['item']->menu_item_parent) && isset($arrMenuItemsModID[$iid]) && ($iitem=$arrMenuItemsModID[$iid]['item']) && $_item=$arrMenuItemsModID[$iid]; ){
 									
-									if($_item['item'] && $_item['item']->object_id!=$nCurrentCategory){
-										
-									}
-								}						
+									array_unshift($items_list,$_item);
+								}
+								
+							}						
 							
 					        $nCurrentPost = get_the_ID();
 							
@@ -764,14 +741,7 @@ function TravelReport_navigation(){
 			            	$sMenuItemID    = $value->ID;
 			            	$sMenuItemTitle = $value->title;
 			            	$sMenuItemUrl   = $value->url;
-							if($sMenuItemID!=77){
-								/*for($i=0;$i<count($arrMenuItems);$i++){
-									if($arrMenuItems[$i]->menu_item_parent==$sMenuItemID){
-										$sMenuItemUrl   = $arrMenuItems[$i]->url;
-										break;
-									}
-								}*/
-							}
+			            	
 				            $sCurrentMenuItem = "";
 				            if ($sMenuItemID == $nCurrentMenuItem || $topItem==$sMenuItemID) {
 			              		$sCurrentMenuItem = "current-menu-item";
@@ -783,9 +753,19 @@ function TravelReport_navigation(){
 			            	$sSubMenuName=submenu_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
 			            	//$addsuMenu=moresub_name($nCurrentMenuItem,$arrMenuItems,$items_list,$nSubMenuParentID,$topItem);
 			            	$act_cat=explode(',', $sSubMenuName);
-			   
+			            	$new='';
+			            	foreach ($act_cat as $small_cat) {
+			            		$new_sub=search($arrMenuItems,'title',$small_cat,$maincatId );
+			            		if(!empty($new_sub)){
+			            			$new=$new.implode(',',$new_sub);
+			            		}
+			            	}
+			            	$newsSubMenuName=$sSubMenuName.$new;
+			            	$act_cat=explode(',', $newsSubMenuName);
+			   				//
+			            	//print_r($arrMenuItems);
 			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 );
-			            	print_r($sSubMenuName."\n");
+
 							$the_query = new WP_Query( $args );
 							$dta="";
 							$dta_more="";
@@ -798,9 +778,9 @@ function TravelReport_navigation(){
 								$cat_array=TravelReport_categorylistfirstArray($post->ID);
 								$cat_intersect=array_intersect ( $act_cat,$cat_array );
 								$cat_name=array_shift($cat_intersect);
-								if($cat_name==''){
+								/*if($cat_name==''){
 									$cat_name=$cat_array[0];
-								}
+								}*/
 								$cat_link=get_category_link(get_cat_ID( $cat_name ));
 								if($first_post==0){
 									if(get_the_post_thumbnail($post->ID, 'thumbnail-container')){
@@ -859,10 +839,6 @@ function TravelReport_navigation(){
 								$first_post++;
 							}
 
-							/* Restore original Post Data 
-							 * NB: Because we are using new WP_Query we aren't stomping on the 
-							 * original $wp_query and it does not need to be reset.
-							*/
 							wp_reset_postdata();
 						
 							// Reset Query
@@ -875,6 +851,29 @@ function TravelReport_navigation(){
 			        }
 			        echo $hover_menu;
 			   		//print_r($GLOBALS['footer_menu']);
+}
+function search($array, $key, $value,$x)
+{
+    $results = array();
+    foreach ($array as $subarray) {
+		if($subarray->$key == $value && $subarray->menu_item_parent == $x)
+		{
+			return search_id($array,$subarray->ID);//search_id($array,$subarray->ID);
+		}        
+    }
+    
+}
+function search_id($array, $key)
+{
+    $results = array();
+    foreach ($array as $subarray) {
+    	
+		if($subarray->menu_item_parent == $key)
+		{
+			array_push($results,$subarray->title);
+		}        
+    }
+    return $results;
 }
 function freplace($item) {
 	if(isset($GLOBALS['nCurrentMenuItem'])){ 
