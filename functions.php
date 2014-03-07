@@ -743,8 +743,7 @@ function TravelReport_navigation(){
 			            	}
 			            	$newsSubMenuName=$sSubMenuName.$new;
 			            	$act_cat=explode(',', $newsSubMenuName);
-			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 ,'post_type' => 'post','update_post_term_cache' => false, // don't retrieve post terms
-          'update_post_meta_cache' => false,'post_status' =>'publish');
+			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 ,'post_type' => 'post','cache_results' => false,'post_status' =>'publish','no_found_rows' => true,);
 							$the_query = new WP_Query( $args );
 							$dta="";
 							$dta_more="";
@@ -768,7 +767,7 @@ function TravelReport_navigation(){
 													<div class="cat"><a href="'.$cat_link.'" title="'.$cat_name.'">'.$cat_name.'</a></div>
 													<div class="date">'.ucfirst (get_the_date()).' - '.get_the_time('G:i').'</div>
 													<h4><a href="'.get_permalink( $post->ID ).'">'.get_the_title().'</a></h4>
-													<p>'.get_the_excerpt().'</p>
+													<p>'.get_the_excerpt($post->ID).'</p>
 												</div>
 											</div>';
 									}else{
@@ -784,7 +783,7 @@ function TravelReport_navigation(){
 													<div class="cat"><a href="'.$cat_link.'" title="'.$cat_name.'">'.$cat_name.'</a></div>
 													<div class="date">'.ucfirst (get_the_date()).' - '.get_the_time('G:i').'</div>
 													<h4><a href="'.get_permalink( $post->ID ).'">'.get_the_title().'</a></h4>
-													<p>'.get_the_excerpt().'</p>
+													<p>'.get_the_excerpt($post->ID).'</p>
 												</div>
 											</div>';
 										}else{
@@ -798,7 +797,7 @@ function TravelReport_navigation(){
 													<div class="cat"><a href="'.$cat_link.'" title="'.$cat_name.'">'.$cat_name.'</a></div>
 													<div class="date">'.ucfirst (get_the_date()).' - '.get_the_time('G:i').'</div>
 													<h4><a href="'.get_permalink( $post->ID ).'">'.get_the_title().'</a></h4>
-													<p>'.get_the_excerpt().'</p>
+													<p>'.get_the_excerpt($post->ID).'</p>
 												</div>
 											</div>';
 										}

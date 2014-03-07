@@ -156,21 +156,7 @@ if (isset($_POST['selWeatherCity'])) {
 		<div class="row">
 			<div class="large-12 columns">
 				<nav class="main-nav">	
-				<?php 
-   $mtime = microtime(); 
-   $mtime = explode(" ",$mtime); 
-   $mtime = $mtime[1] + $mtime[0]; 
-   $starttime = $mtime; 
-   ?> 
 				<?php TravelReport_navigation(); ?>
-				<?php 
-   $mtime = microtime(); 
-   $mtime = explode(" ",$mtime); 
-   $mtime = $mtime[1] + $mtime[0]; 
-   $endtime = $mtime; 
-   $totaltime = ($endtime - $starttime); 
-   echo "This page was created in ".$totaltime." seconds"; 
-?>
 				</nav>		
 			</div>
 		</div>
