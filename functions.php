@@ -743,12 +743,12 @@ function TravelReport_navigation(){
 			            	}
 			            	$newsSubMenuName=$sSubMenuName.$new;
 			            	$act_cat=explode(',', $newsSubMenuName);
-			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 );
+			            	$args = array ( 'category_name' => $sSubMenuName, 'posts_per_page' => 5 ,'post_type' => 'post','update_post_term_cache' => false, // don't retrieve post terms
+          'update_post_meta_cache' => false,'post_status' =>'publish');
 							$the_query = new WP_Query( $args );
 							$dta="";
 							$dta_more="";
 							$first_post=0;
-							
 							while ( $the_query->have_posts() ) {
 								$the_query->the_post();
 								global $post;  
