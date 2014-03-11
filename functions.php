@@ -765,11 +765,12 @@ function TravelReport_navigation(){
 								$cat_name=array_shift($cat_intersect);
 								$cat_link=get_category_link(get_cat_ID( $cat_name ));
 								if($first_post==0){
-									if(get_the_post_thumbnail($post->ID, 'thumbnail-container')){
+									if(get_the_post_thumbnail($post->ID,'full')){
+										$src_image=wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID) );
 										$dta.= '<div class="box">
 												<div class="image_container">
 													<a href="'.get_permalink( $post->ID ).'">
-														<img src="'.wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) ).'">
+														<img src="'.$src_image[0].'">
 													</a>
 												</div>
 												<div class="box_info">
