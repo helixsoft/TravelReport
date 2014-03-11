@@ -15,9 +15,6 @@ get_header(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<div class="text-container">
 					<h1><a href="#"><?php the_title(); ?></a></h1>
-					<div class="small-container clearfix">
-						<div class="date"><?php the_date('F j, Y')?> <?php echo get_the_time();?></div>
-					</div>
 				</div>
 				<div class="text-container">
 					<?php the_content();?>

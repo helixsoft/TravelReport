@@ -28,7 +28,7 @@ function TravelReport_setup() {
 	 * See http://codex.wordpress.org/Post_Formats
 	 */
 	add_theme_support( 'post-formats', array(
-		'video'
+		'video','image'
 	) );
 
 	// This theme uses wp_nav_menu() in one location.
@@ -63,6 +63,15 @@ function mega_enqueue_admin_scripts($hook) {
 }
 add_action( 'admin_enqueue_scripts', 'mega_enqueue_admin_scripts' );
 
+function hrw_enqueue()
+{
+  wp_enqueue_style('thickbox');
+  wp_enqueue_script('media-upload');
+  wp_enqueue_script('thickbox');
+  // moved the js to an external file, you may want to change the path
+  wp_enqueue_script('hrw', '/wp-content/plugins/home-rollover-widget/script.js', null, null, true);
+}
+add_action('admin_enqueue_scripts', 'hrw_enqueue');
 
 /**
  * Load up our theme meta boxes and related code.
@@ -1080,7 +1089,7 @@ function prefix_insert_post_ads( $content ) {
           $myadcode .='</div>';
 	
 	$ad_code = $myadcode;
-	if ( is_single() && get_post_format( $post->ID )!='video') {
+	if ( is_single() && get_post_format( $post->ID )!='video' && get_post_format( $post->ID )!='image') {
 		return prefix_insert_after_paragraph( $ad_code, 2, $content );
 	}
 	

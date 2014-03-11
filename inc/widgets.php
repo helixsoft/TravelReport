@@ -246,8 +246,8 @@ class super extends WP_Widget {
 		</p>
 		<p>
 	      <label for="<?php echo $this->get_field_id('image_uri'); ?>">Use Custom Image</label><br />
-	      <img src="<?php echo $instance['image_uri']; ?>" id="<?php echo $this->get_field_id('image_uri'); ?>">
-	      <input type="text" class="widefat" name="<?php echo $this->get_field_name('image_uri'); ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" value="<?php echo $instance['image_uri']; ?>" />
+	      <img src="<?php echo $instance['image_uri']; ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" style="width:100%;height:auto;">
+	      <input type="text" class="widefat img" name="<?php echo $this->get_field_name('image_uri'); ?>" id="<?php echo $this->get_field_id('image_uri'); ?>" value="<?php echo $instance['image_uri']; ?>" />
 	      <input type="button" class="select-img" value="Select Image" />
 	    </p>
 	    <p>
@@ -272,12 +272,13 @@ class super extends WP_Widget {
 			<input class="widefat" type="radio" id="<?php echo $this->get_field_id( 'widget_show' ); ?>" name="<?php echo $this->get_field_name( 'widget_show' ); ?>" value="Show Post" <?php checked( 'Show Post', $widget_show ); ?>>Show Post<br>
         	<input class="widefat" type="radio" id="<?php echo $this->get_field_id( 'widget_show' ); ?>" name="<?php echo $this->get_field_name( 'widget_show' ); ?>" value="Show Text/Html" <?php checked( 'Show Text/Html', $widget_show ); ?>>Show Text/Html<br>    	
 	 	</p>
-	    <script type="text/javascript">
+	 	<script type="text/javascript">
 	    	var image_field;
 			jQuery(function($){
 			  $(document).on('click', 'input.select-img', function(evt){
 			    image_field = $(this).siblings('.img');
 			    tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+			    $('#TB_title').remove();
 			    return false;
 			  });
 			  window.send_to_editor = function(html) {
@@ -376,6 +377,9 @@ class video extends WP_Widget {
 	function widget( $args, $instance ) {
  		extract($args);
  		$title = apply_filters('widget_title', empty($instance['title']) ? __('job', 'TravelReport') : $instance['title'], $instance, $this->id_base);
+ 		$number = empty( $instance['number'] ) ? '' : $instance['number'];
+ 		if ( empty( $instance['number'] ) || ! $number = absint( $instance['number'] ) )
+ 			$number = 2;
  		?>
  		<div class="text-header small green"><h2><?php echo $title; ?></h2></div>
 					<?php 
@@ -384,8 +388,14 @@ class video extends WP_Widget {
 					    'post_type'              => 'post',
 					    'post_status'            => 'Published ',
 					    'posts_per_page'         => '-1',
-					    'showposts' 			 => '2', 	
-					    'terms' => array( 'post-format-video'),
+					    'showposts' 			 => $number, 	
+					    'tax_query' => array(
+											    array(
+											      'taxonomy' => 'post_format',
+											      'field' => 'slug',
+											      'terms' => 'post-format-video'
+											    )
+											  ),
 					    'operator' => 'IN',
 					  );
 					  // The Query
@@ -428,15 +438,21 @@ class video extends WP_Widget {
  	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['number'] = absint( $new_instance['number'] );
 		return $instance;
 	}
 	function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ,'number' => 2) );
 		$title = esc_attr( $instance['title'] );
+		$number = esc_attr( $instance['number'] );
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>">Title: What ever title they set should be displayed in the widgets header in the admin->appearance->widgets area and also as the title of the widget on the site</label>
 			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('number'); ?>">Number of Posts :</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" />
 		</p>
 		<?php
 	}
