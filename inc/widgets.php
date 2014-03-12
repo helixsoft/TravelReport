@@ -191,7 +191,7 @@ class super extends WP_Widget {
 
 	function form( $instance ) {
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '','number' => 2,'excerpt' => 50 ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '','number' => 2,'excerpt' => 50,'border' =>'Small' ) );
 		$title = esc_attr( $instance['title'] );
 		$color = esc_attr( $instance['color'] );
 		$border = esc_attr( $instance['border'] );
@@ -228,8 +228,8 @@ class super extends WP_Widget {
 	 	</p>
 	 	<p>
 	 		<label for="<?php echo $this->get_field_id('border'); ?>">Border: Choose the size of the border<br/></label> 
-			<input class="widefat" type="radio" id="<?php echo $this->get_field_id( 'border' ); ?>" name="<?php echo $this->get_field_name( 'border' ); ?>" value="Small" <?php checked( 'Small', $color ); ?>>Small<br>
-        	<input class="widefat" type="radio" id="<?php echo $this->get_field_id( 'border' ); ?>" name="<?php echo $this->get_field_name( 'border' ); ?>" value="Big" <?php checked( 'Big', $color ); ?>>Big<br>	
+			<input class="widefat" type="radio" id="<?php echo $this->get_field_id( 'border' ); ?>" name="<?php echo $this->get_field_name( 'border' ); ?>" value="Small" <?php checked( 'Small', $border ); ?>>Small<br>
+        	<input class="widefat" type="radio" id="<?php echo $this->get_field_id( 'border' ); ?>" name="<?php echo $this->get_field_name( 'border' ); ?>" value="Big" <?php checked( 'Big', $border ); ?>>Big<br>	
 	 	</p>
 		<p>
 			<label> Show latest Post</label>

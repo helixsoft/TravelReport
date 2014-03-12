@@ -185,7 +185,7 @@ article{
 	margin: 0 auto;
 }
 .weather-city{
-	width: 90px;
+	width: 130px;
 	margin: 0 auto;
 }
 .post .text-container,.jobads .text-container{
@@ -1202,7 +1202,7 @@ box-shadow: 0 1px 4px #DDDDDD, 0 1px 0 #929292 inset;
 	
 }
 .main-nav ul.sub_menu_hover .box_info p{
-	margin:10px 0;font-size:10px;
+	margin:10px 0;font-size:12px;
 }
 .main-nav ul.sub_menu_hover .box_info h4 a{
 	text-decoration: none;
