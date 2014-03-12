@@ -672,7 +672,7 @@ function TravelReport_navigation(){
 			            	$sMenuItemUrl   = $value->url;
 							
 				            $sCurrentMenuItem = "";
-				            if ($sMenuItemID == $nCurrentMenuItem || $topItem==$sMenuItemID) {
+				            if ($sMenuItemID == $back_nCurrentMenuItem || $back_topItem==$sMenuItemID) {
 			              		$sCurrentMenuItem = "current-menu-item";
 			            	}
 			            	$sMenuOutput .= "<li id=\"menu-item-{$sMenuItemID}\" class=\"menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-{$sMenuItemID} {$sCurrentMenuItem}\"><a href=\"{$sMenuItemUrl}\">{$sMenuItemTitle}</a></li>\n";
@@ -766,7 +766,7 @@ function TravelReport_navigation(){
 								$cat_link=get_category_link(get_cat_ID( $cat_name ));
 								if($first_post==0){
 									if(get_the_post_thumbnail($post->ID,'full')){
-										$src_image=wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID) );
+										$src_image=wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID) ,'full');
 										$dta.= '<div class="box">
 												<div class="image_container">
 													<a href="'.get_permalink( $post->ID ).'">
@@ -832,7 +832,7 @@ function TravelReport_navigation(){
 			        echo $sMenuOutput;
 			        echo "</ul>";
 			        echo "<nav class=\"cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left\" id=\"cbp-spmenu-s1\"><h3>Menu</h3>{$sMobleOutput}</nav>";
-			        echo "<ul id=\"sub_menu-{$topItem}\" class=\"sub_menu\">";
+			        echo "<ul id=\"sub_menu-{$back_topItem}\" class=\"sub_menu\">";
 			        $newsub=submenu($back_nCurrentMenuItem,$arrMenuItems,$back_items_list,$back_nSubMenuParentID,$back_topItem);
 					echo $newsub[0];
 					echo "</ul>";
