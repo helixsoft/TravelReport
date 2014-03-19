@@ -612,6 +612,9 @@ function TravelReport_navigation(){
 			        if ($nCurrentCategory == '' || $nCurrentCategory == '14') {
 			          	$nCurrentCategory = 77;
 			        }
+			        if ($nCurrentCategory == 3) {
+			         // $nCurrentCategory = 18;
+			        }
 			        if ($nCurrentCategory == 18) {
 			          	$nCurrentCategory = 19;
 			        }
@@ -623,10 +626,9 @@ function TravelReport_navigation(){
 			          	$nCurrentCategory = 31;
 			        }
 			        if ($nCurrentCategory == 45) {
-			          	$nCurrentCategory = 46;
+			          	$nCurrentCategory = 45;
 			        }
 					$lvls = 1;
-					
 			        if (empty($nCurrentCategory)) {
 			          	$nCurrentMenuItem = GetFirstMenuItem($sMenu);
 			        } else {
@@ -648,11 +650,10 @@ function TravelReport_navigation(){
 							
 							array_unshift($items_list,$_item);
 						}
-						
+						if($_item['item'] && $_item['item']->object_id!=$nCurrentCategory){}
 					}						
 					
 			        $nCurrentPost = get_the_ID();
-					
 			        if ($nCurrentMenuParent > 0) {
 			          	$nCurrentMenuItem = $nCurrentMenuParent;
 			        }
@@ -665,6 +666,7 @@ function TravelReport_navigation(){
 			       	$cat_list=0;
 			       	$back_nCurrentMenuItem=$nCurrentMenuItem;
 			       	$back_items_list=$items_list;
+
 			        foreach($arrMenuItems as $key=>$value){
 			          	if ($value->menu_item_parent == $nParentID) {
 			            	$sMenuItemID    = $value->ID;
