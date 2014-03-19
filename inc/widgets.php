@@ -388,8 +388,7 @@ class video extends WP_Widget {
 						    'post_type'              => 'post',
 						    'post_status'            => 'Published ',
 						    'post__in'				 => explode(',',$post_ids),
-						    'posts_per_page'         => '-1',
-						    'showposts' 			 => $number, 	
+						    'posts_per_page'         => '-1',	
 						    'tax_query' => array(
 												    array(
 												      'taxonomy' => 'post_format',
@@ -474,7 +473,7 @@ class video extends WP_Widget {
 			<input class="widefat" id="<?php echo $this->get_field_id('post_ids'); ?>" name="<?php echo $this->get_field_name('post_ids'); ?>" type="text" value="<?php echo $post_ids; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('number'); ?>">Number of Posts :</label>
+			<label for="<?php echo $this->get_field_id('number'); ?>">Number of Posts : It is used when Post Ids is empty</label>
 			<input class="widefat" id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" />
 		</p>
 		<?php
