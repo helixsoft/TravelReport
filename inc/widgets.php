@@ -22,7 +22,7 @@ class super extends WP_Widget {
 
 		$title = apply_filters('widget_title', empty($instance['title']) ? __('super', 'TravelReport') : $instance['title'], $instance, $this->id_base);
 		$color = empty( $instance['color'] ) ? '#FF0000' : $instance['color'];
-		$border = empty( $instance['color'] ) ? 'Small' : $instance['border'];
+		$border = empty( $instance['border'] ) ? 'Small' : $instance['border'];
 		$category = empty( $instance['category'] ) ? '' : $instance['category'];
 		$number = empty( $instance['number'] ) ? '' : $instance['number'];
 		$image_uri =empty( $instance['image_uri'] ) ? '' : $instance['image_uri'];
@@ -110,11 +110,9 @@ class super extends WP_Widget {
 			<div class="travel_reports row">
 				<div class="large-12 columns">
 					<?php if($image_type == 'Use Custom Image' ) {?>
-					<div class="large-12 small-4 columns">
 						<div class="image-container margin-top-10">
 							<img src="<?php echo $image_uri ?>">
 						</div>
-					</div>
 					<?php } ?>
 					<?php
 					// The Query
@@ -377,6 +375,7 @@ class video extends WP_Widget {
 	function widget( $args, $instance ) {
  		extract($args);
  		$title = apply_filters('widget_title', empty($instance['title']) ? __('job', 'TravelReport') : $instance['title'], $instance, $this->id_base);
+ 		$post_ids = empty( $instance['post_ids'] ) ? '' : $instance['post_ids'];
  		$number = empty( $instance['number'] ) ? '' : $instance['number'];
  		if ( empty( $instance['number'] ) || ! $number = absint( $instance['number'] ) )
  			$number = 2;
@@ -384,20 +383,38 @@ class video extends WP_Widget {
  		<div class="text-header small green"><h2><?php echo $title; ?></h2></div>
 					<?php 
 					    // WP_Query arguments
-					  $args = array (
-					    'post_type'              => 'post',
-					    'post_status'            => 'Published ',
-					    'posts_per_page'         => '-1',
-					    'showposts' 			 => $number, 	
-					    'tax_query' => array(
-											    array(
-											      'taxonomy' => 'post_format',
-											      'field' => 'slug',
-											      'terms' => 'post-format-video'
-											    )
-											  ),
-					    'operator' => 'IN',
-					  );
+					 if($post_ids!=''){
+						  $args = array (
+						    'post_type'              => 'post',
+						    'post_status'            => 'Published ',
+						    'post__in'				 => explode(',',$post_ids),
+						    'posts_per_page'         => '-1',
+						    'showposts' 			 => $number, 	
+						    'tax_query' => array(
+												    array(
+												      'taxonomy' => 'post_format',
+												      'field' => 'slug',
+												      'terms' => 'post-format-video'
+												    )
+												  ),
+						    'operator' => 'IN',
+						  );
+						}else{
+							$args = array (
+						    'post_type'              => 'post',
+						    'post_status'            => 'Published ',
+						    'posts_per_page'         => '-1',
+						    'showposts' 			 => $number, 	
+						    'tax_query' => array(
+												    array(
+												      'taxonomy' => 'post_format',
+												      'field' => 'slug',
+												      'terms' => 'post-format-video'
+												    )
+												  ),
+						    'operator' => 'IN',
+						  );
+						}
 					  // The Query
 				      $the_query = new WP_Query( $args );
 				     ?>
@@ -438,17 +455,23 @@ class video extends WP_Widget {
  	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['post_ids'] = strip_tags( $new_instance['post_ids'] );
 		$instance['number'] = absint( $new_instance['number'] );
 		return $instance;
 	}
 	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ,'number' => 2) );
 		$title = esc_attr( $instance['title'] );
+		$post_ids = esc_attr ($instance['post_ids']);
 		$number = esc_attr( $instance['number'] );
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>">Title: What ever title they set should be displayed in the widgets header in the admin->appearance->widgets area and also as the title of the widget on the site</label>
 			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('post_ids'); ?>">Post Ids : Enter the video post with comma separator</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('post_ids'); ?>" name="<?php echo $this->get_field_name('post_ids'); ?>" type="text" value="<?php echo $post_ids; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id('number'); ?>">Number of Posts :</label>
