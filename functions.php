@@ -331,38 +331,6 @@ function relatedpost($postid){
     $max_articles = 5;  // How many articles to display
     $cnt = 0;
     
-    $article_tags = get_the_tags($postid);
-    $tags_string = '';
-    if ($article_tags) {
-        foreach ($article_tags as $article_tag) {
-            $tags_string .= $article_tag->slug . ',';
-        }
-    }
-    $tag_related_posts = get_posts('exclude=' . $postid . '&numberposts=' . $max_articles . '&tag=' . $tags_string);
-    
-    if ($tag_related_posts) {
-        foreach ($tag_related_posts as $related_post) {
-            $cnt++;
-
-            echo '<div class="large-12 columns"><div class="text-container">';
-            echo '<h6>';
-            echo '<a href="' . get_permalink($related_post->ID) . '" title="' .$related_post->post_title .'">';
-            echo $related_post->post_title;
-            echo '</a>';
-            echo '</h6>';
-            echo '<div class="small-container clearfix">';
-	        echo '<div class="date">'.get_the_time( 'F j, Y', $related_post->ID ).'</div>';
-			echo '<p>';
-			echo '<a href="' . get_permalink($related_post->ID) . '" title="' .$related_post->post_title .'">';
-			echo $related_post->post_excerpt;
-			echo '</a>';
-			echo '</p>';
-			echo '</div>';
-            echo '</div></div>';
-        }
-    }
-
-
     // Only if there's not enough tag related articles,
     // we add some from the same category
     
@@ -397,7 +365,41 @@ function relatedpost($postid){
 	            echo '</div></div>';
             }
         }
-    }     
+    }
+    if ($cnt < $max_articles) {
+	    $article_tags = get_the_tags($postid);
+	    $tags_string = '';
+	    if ($article_tags) {
+	        foreach ($article_tags as $article_tag) {
+	            $tags_string .= $article_tag->slug . ',';
+	        }
+	    }
+	    if(!empty($tags_sting)){
+	    	$tag_related_posts = get_posts('exclude=' . $postid . '&numberposts=' . $max_articles . '&tag=' . $tags_string);
+	    
+		    if ($tag_related_posts) {
+		        foreach ($tag_related_posts as $related_post) {
+		            $cnt++;
+
+		            echo '<div class="large-12 columns"><div class="text-container">';
+		            echo '<h6>';
+		            echo '<a href="' . get_permalink($related_post->ID) . '" title="' .$related_post->post_title .'">';
+		            echo $related_post->post_title;
+		            echo '</a>';
+		            echo '</h6>';
+		            echo '<div class="small-container clearfix">';
+			        echo '<div class="date">'.get_the_time( 'F j, Y', $related_post->ID ).'</div>';
+					echo '<p>';
+					echo '<a href="' . get_permalink($related_post->ID) . '" title="' .$related_post->post_title .'">';
+					echo $related_post->post_excerpt;
+					echo '</a>';
+					echo '</p>';
+					echo '</div>';
+		            echo '</div></div>';
+		        }
+		    }
+		}
+	}     
 }
 
 function limit_words($string, $word_limit)

@@ -68,11 +68,20 @@ header{
 	background: #2f2e33;
 }
 
-
-.header-top .date_time{
-	display: none;
+.logo_area{
+	width: 525px;
+	float: left;
 }
-
+.header-top .date_time{
+		width: 150px;
+		margin-left: 40px;
+		color: rgb(255, 255, 255);
+		font-size: 10px;
+		height: 20px;
+		line-height: 19px;
+		float: left;
+		display: block;
+	}
 .header-top nav{
 	width: 420px;
 	height: 20px;
@@ -95,6 +104,9 @@ header{
 	list-style: none;
 	float: left;
 	border-right: 1px solid;
+}
+.header-top nav ul li:nth-last-child(1){
+	border-right: 0px solid;
 }
 .header-top nav ul li a{
 	display: block;
@@ -180,6 +192,14 @@ article{
 }
 .image-container a{
 	text-decoration: none;
+}
+.news_area{
+	width: 350px;
+	float: left;
+}
+.weather_area{
+	width: 175px;
+	float: left;
 }
 .weather{
 	margin: 0 auto;
@@ -1291,87 +1311,7 @@ background-position: 0px -8px;
 text-transform: uppercase;
 text-decoration: none;
 }
-@media only screen and (max-width:768px){
-	.view_more_posts{display:block;}
-	.nav-pagination{display: none;}
-}
-@media screen and (max-width: 480px){
-	.header-top{
-		height: 40px;
-	}
-	.header-top nav{
-		width: 100%;
-	}
-}
-@media screen and (min-width: 768px){
-	.header-top .date_time{
-		width: 150px;
-		margin-left: 40px;
-		color: rgb(255, 255, 255);
-		font-size: 10px;
-		height: 20px;
-		line-height: 19px;
-		float: left;
-		display: block;
-	}
-}
 
-@media screen and (min-width: 1024px){
-	.header-top .date_time{
-		width: 150px;
-		margin-left: 40px;
-		color: rgb(255, 255, 255);
-		font-size: 10px;
-		height: 20px;
-		line-height: 19px;
-		float: left;
-		display: block;
-	}
-}
-@media screen and (min-width: 1280px){
-	.header-top .date_time{
-		width: 150px;
-		margin-left: 40px;
-		color: rgb(255, 255, 255);
-		font-size: 10px;
-		height: 20px;
-		line-height: 19px;
-		float: left;
-		display: block;
-	}
-}
-@media only screen and (min-width: 40.063em) {
-  .tabs.vertical {
-    width: 20%;
-    float: left;
-    margin-bottom: 1.25rem; }
-
-  .tabs-content.vertical {
-    width: 80%;
-    float: left;
-    margin-left: -1px; } 
-}
-/*
-@media screen and (min-width:768px){
-	.top_ads{
-		display: none;
-	}
-}
-@media screen and (min-width:1024px){
-	.top_ads{
-		display: block;
-	}
-}
-*/
-@media screen and (min-width:768px){
-	footer{
-		background-image: url("images/mapbg.jpg");
-		background-color: rgb(0, 0, 0);
-		background-repeat: repeat-x;
-		background-position:center center;
-		min-height: 427px;
-	}
-}
 /* General styles for all menus */
 .cbp-spmenu {
 	background: #47a3da;
@@ -1501,43 +1441,8 @@ text-decoration: none;
 
 /* Example media queries */
 
-@media screen and (max-width: 1024px){
 
-	.cbp-spmenu-horizontal {
-		font-size: 75%;
-		height: 110px;
-	}
 
-	.cbp-spmenu-top {
-		top: -110px;
-	}
-
-	.cbp-spmenu-bottom {
-		bottom: -110px;
-	}
-
-}
-
-@media screen and (max-height: 768px){
-
-	.cbp-spmenu-vertical {
-		font-size: 90%;
-		width: 190px;
-	}
-
-	.cbp-spmenu-left,
-	.cbp-spmenu-push-toleft {
-		left: -190px;
-	}
-
-	.cbp-spmenu-right {
-		right: -190px;
-	}
-
-	.cbp-spmenu-push-toright {
-		left: 190px;
-	}
-}
 .showLeftPush{
 	display: none;
 }
@@ -1545,7 +1450,79 @@ text-decoration: none;
 	margin-bottom: 25px;
 	border: none;
 }
-@media screen and (max-width: 1280px){
+
+.responsivevideo {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+    margin: 10px 0;
+}
+}.responsivevideo iframe, .responsivevideo object, .responsivevideo embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%}
+.jobs .image-container{
+	border: none;
+}
+.margin-top-none{
+	margin-top: 0px !important;
+}
+.intro{
+	margin-top: 0px;
+}
+.intro img{
+	width: 100%;
+}
+
+.buttons .button{
+	margin-bottom: 5px;
+}
+.new-font{
+	font-family: 'Open Sans';
+    color: #585858;
+    line-height: normal;
+}
+.large-450{
+    width: 470px;
+  }
+  .large-240{
+    width: 260px;
+  }
+  .large-300{
+    width: 320px;
+  }
+  .footer_menu{
+  	width: 150px;
+  	float: left;
+  }
+  .footer_text{
+  	width: 350px;
+  	float: left;
+  }
+b, strong {
+font-weight: bold;
+color: #383838;
+}
+@media only screen and (max-width: 1024px){
+	.logo_area{
+		width: 512px;
+	}
+	.news_area{
+		width: 341px;
+	}
+	.weather_area{
+		width: 170px;
+	}
+	.weather-city{
+		width: 126px;
+	}
+	.large-240{
+		width: 234px;
+	}
 	.showLeftPush{
 		display: block;
 background: none repeat scroll 0% 0% rgb(204, 204, 204);
@@ -1574,52 +1551,157 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 	.main-nav ul.sub_menu, .main-nav ul.brutalMenu{
 		display: none;
 	}
-}
-.responsivevideo {
-    position: relative;
-    padding-bottom: 56.25%;
-    padding-top: 30px;
-    height: 0;
-    overflow: hidden;
-    margin: 10px 0;
-}
-@media only screen and (min-width: 768px) {
-    .responsivevideo {
-    margin: 0 0 15px 0;
-}
-}.responsivevideo iframe, .responsivevideo object, .responsivevideo embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%}
-.jobs .image-container{
-	border: none;
-}
-.margin-top-none{
-	margin-top: 0px !important;
-}
-@media screen and (max-width: 767px){
-	.hide-mobile{
+	.footer_menu {
+	    width: 146px;
+	    float: left;
+	    padding: 0 10px;
+	}
+	.footer_text{
+		width: 340px;
+	}
+} 
+@media only screen and (max-width: 768px){
+	.logo_area{
+		width: 384px;
+	}
+	.news_area{
+		width: 256px;
+	}
+	.weather_area{
+		width: 128px;
+	}
+	.weather-city{
+		width: 95px;
+	}
+	.large-300{
+		float: left !important;
+	}
+	.large-240{
+		width: 290px;
+	}
+	.header-top .date_time{
+		width: 150px;
+		margin-left: 40px;
+		color: rgb(255, 255, 255);
+		font-size: 10px;
+		height: 20px;
+		line-height: 19px;
+		float: left;
+		display: block;
+	}
+	.view_more_posts{display:block;}
+	.nav-pagination{display: none;}
+	.showLeftPush{
+		display: block;
+background: none repeat scroll 0% 0% rgb(204, 204, 204);
+border: medium none;
+width: 30px;
+height: 30px;
+text-indent: -900em;
+overflow: hidden;
+position: relative;
+cursor: pointer;
+outline: medium none;
+	}
+	.showLeftPush:after{
+		content: "";
+position: absolute;
+width: 65%;
+height: 3px;
+background: none repeat scroll 0% 0% rgb(255, 255, 255);
+top: 8px;
+left: 16%;
+box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
+	}
+	.main-nav ul.main_menu{
 		display: none;
 	}
+	.main-nav ul.sub_menu, .main-nav ul.brutalMenu{
+		display: none;
+	}
+	.footer_menu {
+	    width: 109px;
+	    float: left;
+	    padding: 0 10px;
+	}
+	.footer_text {
+	    width: 256px;
+	    float: left;
+	    padding: 0 10px;
+	}
+	footer .footer_menu h1{
+		font-size: 11px;
+	}
 }
-.intro{
-	margin-top: 0px;
+@media screen and (min-width: 320px) and (max-width: 480px){
+	.logo_area{
+		width: 300px;
+		float: none;
+		margin: 0 auto;
+	}
+	.header-top,.news_area,.weather_area{
+		display: none;
+	}
+	.large-450,.large-240,.large-300{
+		width: 300px;
+		margin: 0 auto;
+		float: none !important;
+	}
+	.view_more_posts{display:block;}
+	.nav-pagination{display: none;}
+	.showLeftPush{
+		display: block;
+		background: none repeat scroll 0% 0% rgb(204, 204, 204);
+		border: medium none;
+		width: 30px;
+		height: 30px;
+		text-indent: -900em;
+		overflow: hidden;
+		position: relative;
+		cursor: pointer;
+		outline: medium none;
+	}
+	.showLeftPush:after{
+		content: "";
+		position: absolute;
+		width: 65%;
+		height: 3px;
+		background: none repeat scroll 0% 0% rgb(255, 255, 255);
+		top: 8px;
+		left: 16%;
+		box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
+	}
+	.main-nav ul.main_menu{
+		display: none;
+	}
+	.main-nav ul.sub_menu, .main-nav ul.brutalMenu{
+		display: none;
+	}
+	.footer_menu{
+		display: none;
+	}
+	.footer_text{
+		float: none;
+		margin: 0 auto;
+		width: 300px;
+	}
 }
-.intro img{
-	width: 100%;
+@media screen and (max-width: 480px){
+	.showLeftPush{
+		left: 90px;
+	}
 }
-
-.buttons .button{
-	margin-bottom: 5px;
+@media screen and (max-width: 320px){
+	.showLeftPush{
+		left: 10px;
+	}
 }
-.new-font{
-	font-family: 'Open Sans';
-    color: #585858;
-    line-height: normal;
+@media screen and (min-width:1024px){
+	footer{
+		background-image: url("images/mapbg.jpg");
+		background-color: rgb(0, 0, 0);
+		background-repeat: repeat-x;
+		background-position:center center;
+		min-height: 427px;
+	}
 }
-b, strong {
-font-weight: bold;
-color: #383838;
-} 
