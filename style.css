@@ -1507,21 +1507,141 @@ b, strong {
 font-weight: bold;
 color: #383838;
 }
-@media only screen and (max-width: 1024px){
+@media only screen and (min-width: 1025px) and (max-width: 1070px){
 	.logo_area{
-		width: 512px;
+		width: 50%;
 	}
 	.news_area{
-		width: 341px;
+		width: 30%;
 	}
 	.weather_area{
-		width: 170px;
+		width: 20%;
 	}
 	.weather-city{
-		width: 126px;
+		width: 90px;
+	}
+	.large-450 {
+		width: 50%;
+	}
+	.large-240 {
+		width: 20%;
+	}
+	.large-300{
+		width: 30%;
+	}
+	.showLeftPush{
+		display: block;
+		background: none repeat scroll 0% 0% rgb(204, 204, 204);
+		border: medium none;
+		width: 30px;
+		height: 30px;
+		text-indent: -900em;
+		overflow: hidden;
+		position: relative;
+		cursor: pointer;
+		outline: medium none;
+	}
+	.showLeftPush:after{
+		content: "";
+		position: absolute;
+		width: 65%;
+		height: 3px;
+		background: none repeat scroll 0% 0% rgb(255, 255, 255);
+		top: 8px;
+		left: 16%;
+		box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
+	}
+	.main-nav ul.main_menu{
+		display: none;
+	}
+	.main-nav ul.sub_menu, .main-nav ul.brutalMenu{
+		display: none;
+	}
+	.view_more_posts{display:block;}
+	.nav-pagination{display: none;}
+}
+@media only screen and (min-width: 801px) and (max-width: 1024px){
+	.logo_area{
+		width: 50%;
+	}
+	.news_area{
+		width: 30%;
+	}
+	.weather_area{
+		width: 20%;
+	}
+	.weather-city{
+		width: 90%;
+	}
+	.large-450 {
+		width: 50%;
+	}
+	.large-240 {
+		width: 20%;
+	}
+	.large-300{
+		width: 30%;
+	}
+	.showLeftPush{
+		display: block;
+		background: none repeat scroll 0% 0% rgb(204, 204, 204);
+		border: medium none;
+		width: 30px;
+		height: 30px;
+		text-indent: -900em;
+		overflow: hidden;
+		position: relative;
+		cursor: pointer;
+		outline: medium none;
+	}
+	.showLeftPush:after{
+		content: "";
+		position: absolute;
+		width: 65%;
+		height: 3px;
+		background: none repeat scroll 0% 0% rgb(255, 255, 255);
+		top: 8px;
+		left: 16%;
+		box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
+	}
+	.main-nav ul.main_menu{
+		display: none;
+	}
+	.main-nav ul.sub_menu, .main-nav ul.brutalMenu{
+		display: none;
+	}
+	.footer_menu {
+	    width: 146px;
+	    float: left;
+	    padding: 0 10px;
+	}
+	.footer_text{
+		width: 340px;
+	}
+	.view_more_posts{display:block;}
+	.nav-pagination{display: none;}
+}
+@media only screen and (min-width: 768px) and (max-width: 800px){
+	.logo_area{
+		width: 50%;
+	}
+	.news_area{
+		width: 30%;
+	}
+	.weather_area{
+		width: 20%;
+	}
+	.weather-city{
+		width: 90%;
+	}
+	.large-450{
+		width: 60%;
 	}
 	.large-240{
-		width: 234px;
+		width: 40%;
+	}
+	.large-300{
+		float: left !important;
 	}
 	.showLeftPush{
 		display: block;
@@ -1559,25 +1679,30 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 	.footer_text{
 		width: 340px;
 	}
+	.view_more_posts{display:block;}
+	.nav-pagination{display: none;}
 } 
-@media only screen and (max-width: 768px){
+@media only screen and (min-width: 600px) and (max-width: 768px){
 	.logo_area{
-		width: 384px;
+		width: 50%;
 	}
 	.news_area{
-		width: 256px;
+		width: 50%;
 	}
 	.weather_area{
-		width: 128px;
+		display: none;
 	}
-	.weather-city{
-		width: 95px;
+	.large-450{
+		width: 60%;
 	}
 	.large-300{
 		float: left !important;
 	}
 	.large-240{
-		width: 290px;
+		width: 40%;
+	}
+	.header-top{
+		display: none;
 	}
 	.header-top .date_time{
 		width: 150px;
@@ -1593,25 +1718,25 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 	.nav-pagination{display: none;}
 	.showLeftPush{
 		display: block;
-background: none repeat scroll 0% 0% rgb(204, 204, 204);
-border: medium none;
-width: 30px;
-height: 30px;
-text-indent: -900em;
-overflow: hidden;
-position: relative;
-cursor: pointer;
-outline: medium none;
+		background: none repeat scroll 0% 0% rgb(204, 204, 204);
+		border: medium none;
+		width: 30px;
+		height: 30px;
+		text-indent: -900em;
+		overflow: hidden;
+		position: relative;
+		cursor: pointer;
+		outline: medium none;
 	}
 	.showLeftPush:after{
 		content: "";
-position: absolute;
-width: 65%;
-height: 3px;
-background: none repeat scroll 0% 0% rgb(255, 255, 255);
-top: 8px;
-left: 16%;
-box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
+		position: absolute;
+		width: 65%;
+		height: 3px;
+		background: none repeat scroll 0% 0% rgb(255, 255, 255);
+		top: 8px;
+		left: 16%;
+		box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 	}
 	.main-nav ul.main_menu{
 		display: none;
@@ -1620,12 +1745,12 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 		display: none;
 	}
 	.footer_menu {
-	    width: 109px;
+	    width: 100px;
 	    float: left;
 	    padding: 0 10px;
 	}
 	.footer_text {
-	    width: 256px;
+	    width: 196px;
 	    float: left;
 	    padding: 0 10px;
 	}
@@ -1633,7 +1758,7 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 		font-size: 11px;
 	}
 }
-@media screen and (min-width: 320px) and (max-width: 480px){
+@media screen and (min-width: 320px) and (max-width: 599px){
 	.logo_area{
 		width: 300px;
 		float: none;
@@ -1684,6 +1809,11 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 		float: none;
 		margin: 0 auto;
 		width: 300px;
+	}
+}
+@media screen and (max-width: 599px){
+	.showLeftPush{
+		left: 150px;
 	}
 }
 @media screen and (max-width: 480px){
