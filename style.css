@@ -1299,7 +1299,6 @@ box-shadow: 0 1px 4px #DDDDDD, 0 1px 0 #929292 inset;
 }
 .view_more_posts {
 display: none;
-float: left;
 width: 100%;
 margin: 30px 0px;
 height: 67px;
@@ -1314,17 +1313,17 @@ text-decoration: none;
 
 /* General styles for all menus */
 .cbp-spmenu {
-	background: #47a3da;
+	background: #3d3d3d;
 	position: fixed;
 }
 
 .cbp-spmenu h3 {
-	color: #afdefa;
+	color: #fff;
 	font-size: 1.9em;
 	padding: 20px;
 	margin: 0;
 	font-weight: 300;
-	background: #0d77b6;
+	background: #000;
 }
 
 .cbp-spmenu a {
@@ -1335,12 +1334,12 @@ text-decoration: none;
 }
 
 .cbp-spmenu a:hover {
-	background: #258ecd;
+	background: #2e2e2e;
 }
 
 .cbp-spmenu a:active {
-	background: #afdefa;
-	color: #47a3da;
+	background: #2e2e2e;
+	color: #fff;
 }
 
 /* Orientation-dependent styles for the content of the menu */
@@ -1353,7 +1352,7 @@ text-decoration: none;
 }
 
 .cbp-spmenu-vertical a {
-	border-bottom: 1px solid #258ecd;
+	border-bottom: 1px solid #575757;
 	padding: 1em;
 }
 
@@ -1375,7 +1374,7 @@ text-decoration: none;
 	float: left;
 	width: 20%;
 	padding: 0.8em;
-	border-left: 1px solid #258ecd;
+	border-left: 1px solid #575757;
 }
 
 /* Vertical menu that slides from the left or right */
@@ -1620,6 +1619,9 @@ color: #383838;
 	}
 	.view_more_posts{display:block;}
 	.nav-pagination{display: none;}
+	.image-container .playhover {
+		background-size: 30%;
+	}
 }
 @media only screen and (min-width: 768px) and (max-width: 800px){
 	.logo_area{
@@ -1681,6 +1683,9 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 	}
 	.view_more_posts{display:block;}
 	.nav-pagination{display: none;}
+	.image-container .playhover {
+		background-size: 30%;
+	}
 } 
 @media only screen and (min-width: 600px) and (max-width: 768px){
 	.logo_area{
@@ -1757,6 +1762,9 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 	footer .footer_menu h1{
 		font-size: 11px;
 	}
+	.image-container .playhover {
+		background-size: 30%;
+	}
 }
 @media screen and (min-width: 320px) and (max-width: 599px){
 	.logo_area{
@@ -1810,20 +1818,99 @@ box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
 		margin: 0 auto;
 		width: 300px;
 	}
+	.image-container .playhover {
+		background-size: 30%;
+	}
+}
+@media screen and (min-width: 240px) and (max-width: 319px){
+	.logo_area{
+		width: 200px;
+		float: none;
+		margin: 0 auto;
+	}
+	.header-top,.news_area,.weather_area{
+		display: none;
+	}
+	.large-450,.large-240,.large-300{
+		width: 200px;
+		margin: 0 auto;
+		float: none !important;
+	}
+	.view_more_posts{display:block;}
+	.nav-pagination{display: none;}
+	.showLeftPush{
+		display: block;
+		background: none repeat scroll 0% 0% rgb(204, 204, 204);
+		border: medium none;
+		width: 30px;
+		height: 30px;
+		text-indent: -900em;
+		overflow: hidden;
+		position: relative;
+		cursor: pointer;
+		outline: medium none;
+	}
+	.showLeftPush:after{
+		content: "";
+		position: absolute;
+		width: 65%;
+		height: 3px;
+		background: none repeat scroll 0% 0% rgb(255, 255, 255);
+		top: 8px;
+		left: 16%;
+		box-shadow: 0px 6px 0px rgb(255, 255, 255), 0px 12px 0px rgb(255, 255, 255);
+	}
+	.main-nav ul.main_menu{
+		display: none;
+	}
+	.main-nav ul.sub_menu, .main-nav ul.brutalMenu{
+		display: none;
+	}
+	.footer_menu{
+		display: none;
+	}
+	.footer_text{
+		float: none;
+		margin: 0 auto;
+		width: 200px;
+	}
+	.image-container .playhover {
+		background-size: 30%;
+	}
+	.text-container h1{
+		font-size: 15px;
+	}
+	.text-container p.description{
+		font-size: 12px;
+	}
+	.travel_reports .text-container h6, .chronicle .text-container h6, .new_job .text-container h6{
+		font-size: 15px;
+	}
+	.travel_reports .text-container p, .chronicle .text-container p, .new_job .text-container p, .related .text-container p {
+		font-size: 12px;
+	}
+	.video .text-container h6{
+		font-size: 15px;
+	}
 }
 @media screen and (max-width: 599px){
 	.showLeftPush{
-		left: 150px;
+		left: calc(50% - 140px);
 	}
 }
 @media screen and (max-width: 480px){
 	.showLeftPush{
-		left: 90px;
+		left: calc(50% - 140px);
 	}
 }
 @media screen and (max-width: 320px){
 	.showLeftPush{
-		left: 10px;
+		left: calc(50% - 140px);
+	}
+}
+@media screen and (max-width: 319px){
+	.showLeftPush{
+		left: calc(50% - 90px);
 	}
 }
 @media screen and (min-width:1024px){

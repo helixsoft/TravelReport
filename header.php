@@ -22,7 +22,7 @@ if (isset($_POST['selWeatherCity'])) {
 	<header>
 		<div class="row">
 			<div class="large-12 columns ">
-				<button id="showLeftPush" class="showLeftPush">Show/Hide Left Push Menu</button>
+				
 				<div class="header-top hide-mobile">
 				    <div class="date_time"><?php echo date('l, F jS, Y'); ?></div>
 				    <?php
@@ -165,6 +165,7 @@ if (isset($_POST['selWeatherCity'])) {
 		</div>	
 		<div class="row">
 			<div class="large-12 columns hide-mobile">
+				<button id="showLeftPush" class="showLeftPush">Show/Hide Left Push Menu</button>
 				<nav class="main-nav ">	
 				<?php TravelReport_navigation(); ?>
 				</nav>		
