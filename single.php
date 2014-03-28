@@ -14,14 +14,14 @@ get_header(); ?>
 				<?php get_template_part('single-page',get_post_format()); ?>
 				
 			<?php endwhile; ?>
-				<div class="large-12 columns">
-					<div class="row">
+				
+			
 						<div class="text-header small orange color_coding"><h2>SENASTE NUMRET</h2></div>
 						<div class="row related">
 							<?php relatedpost($post->ID); ?>
 						</div>
-					</div>
-				</div>
+	
+				
 			</article>
 			<?php TravelReport_post_nav()?>
 				<script type='text/javascript'>

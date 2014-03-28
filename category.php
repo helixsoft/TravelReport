@@ -11,7 +11,7 @@ get_header(); ?>
 			<?php get_template_part( 'content', get_post_format() ); ?>
 			<?php endwhile;endif; ?>
 			<div class="large-12 columns">
-				<div class="more_posts_2 more-post-container"  style="float: left;"></div>
+				<div class="more_posts_2 more-post-container" ></div>
 				<?php TravelReport_paging_nav()?>
 	        	<a id='view_more_posts' class='view_more_posts' href="#" onClick="_gaq.push(['_trackEvent', 'Homepage', 'Dynamic Load Posts', 'more posts 2']);"><?php _e('+ Visa Fler Artiklar','TravelReport')?></a>
 		       <script type='text/javascript'>
